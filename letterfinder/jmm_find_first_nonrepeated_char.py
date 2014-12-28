@@ -38,20 +38,13 @@ def find_first_nrc_onepass_od(st):
         return seen.keys()[nr_counter]
     return None
 
-find_first_nrc = find_first_nrc_onepass
-
 def main(args):
-    assert find_first_nrc('') is None
-    assert find_first_nrc('poo') == 'p'
-    assert find_first_nrc('oop') == 'p'
-    assert find_first_nrc('poop') is None
+    version = args[1]
+    find_first_nrc = eval("find_first_nrc_" + version)
 
     with open(args[0]) as fp:
         for line in fp:
-            onepass = find_first_nrc_onepass(line.strip())
-            #onepass_od = find_first_nrc_onepass_od(line.strip())
-            #naive = find_first_nrc_naive(line.strip())
-            #assert onepass == naive == onepass_od, (onepass, naive, onepass_od)
+            print find_first_nrc(line.strip())
 
 
 if __name__ == '__main__':
