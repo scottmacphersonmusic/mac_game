@@ -1,4 +1,5 @@
 import sys
+from collections import OrderedDict
 
 def find_first_nrc_naive(st):
     for ch in st:
@@ -22,6 +23,21 @@ def find_first_nrc_onepass(st):
         return order_seen[nr_counter]['char']
     return None
 
+def find_first_nrc_onepass_od(st):
+    seen, nr_counter = OrderedDict(), 0
+    for ch in st:
+        if ch not in seen:
+            seen[ch] = 1
+        else:
+            seen[ch] += 1
+            while nr_counter < len(seen) and \
+                  seen.values()[nr_counter] > 1:
+                nr_counter += 1
+
+    if nr_counter < len(seen):
+        return seen.keys()[nr_counter]
+    return None
+
 find_first_nrc = find_first_nrc_onepass
 
 def main(args):
@@ -33,8 +49,9 @@ def main(args):
     with open(args[0]) as fp:
         for line in fp:
             onepass = find_first_nrc_onepass(line.strip())
-            naive = find_first_nrc_naive(line.strip())
-            assert onepass == naive
+            #onepass_od = find_first_nrc_onepass_od(line.strip())
+            #naive = find_first_nrc_naive(line.strip())
+            #assert onepass == naive == onepass_od, (onepass, naive, onepass_od)
 
 
 if __name__ == '__main__':
