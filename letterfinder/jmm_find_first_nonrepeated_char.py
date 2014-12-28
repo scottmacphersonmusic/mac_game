@@ -39,10 +39,10 @@ def find_first_nrc_onepass_od(st):
     return None
 
 def main(args):
-    version = args[1]
+    testfile, version = args
     find_first_nrc = eval("find_first_nrc_" + version)
 
-    with open(args[0]) as fp:
+    with open(testfile) as fp:
         for line in fp:
             print find_first_nrc(line.strip())
 
